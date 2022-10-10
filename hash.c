@@ -1,3 +1,9 @@
+/**
+ * 
+ * @remark radix found by
+ * char1 *128^0 + char2 * 128^1 + char 3 * 128^2 * 128^3 + char 4
+*/
+
 #include <stdio.h>
 
 struct linkedlist
@@ -14,6 +20,7 @@ struct hashtab
         struct linkedlist *val;
         struct hashtab *next;
 };
+
 
 
 int main()
