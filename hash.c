@@ -19,25 +19,15 @@ struct hashtab
 };
 
 void createtable(int len, struct linkedlist *hash);
+long long radix(char *mess);
+long long pow(long long base, int power);
 
 int main()
 {
         struct linkedlist hash[31];
-        for(int i = 0; i < 31; i++)
-                printf("%c", hash[i].real);
 
 
         return 0;
-}
-
-
-void createtable(int len, struct linkedlist *hash)
-{
-        for (int i = 0; i < len; i++){
-                hash[i].real = 'F';
-                hash[i].next = NULL;
-        }
-
 }
 
 
@@ -47,19 +37,20 @@ struct linkedlist *initialize(char *mess)
 }
 
 
-int radix(char *mess)
+long long radix(char *mess)
 {
-        int key;
-
-
+        long long key;
+        for(int i = 0; i < 4; i++){
+                key = key + (mess[i] * pow(128, i));
+        }
         return key;
 }
 
 
-int pow(int base, int power)
+long long pow(long long base, int power)
 {
         if(power == 0){
-                base = 0;
+                base = 1;
         } else{
                 for (int i = 0; i < power; i++)
                         base *= base;
