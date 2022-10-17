@@ -173,6 +173,11 @@ void printhash(struct hashtab *hash, int len)
 }
 
 
+/**
+ * @brief prints out all the elements in a given bucket
+ * 
+ * @param bucket the bucket we are currently looking at
+*/
 void printbucket(struct linkedlist *bucket)
 {
         if(bucket != NULL){
@@ -182,6 +187,12 @@ void printbucket(struct linkedlist *bucket)
 }
 
 
+/**
+ * @brief inserts a given element into the linked list
+ * 
+ * @param has the has table
+ * @param bucket the bucket we are adding
+*/
 void insert(struct hashtab *has, struct linkedlist *bucket)
 {
         long int key = bucket->key % 31;
@@ -193,6 +204,12 @@ void insert(struct hashtab *has, struct linkedlist *bucket)
 }
 
 
+/**
+ * @brief deals with collisions when adding to the linked list
+ * 
+ * @param cur the first bucket in the has table.
+ * @param addon the bucket we are adding.
+*/
 void collision(struct linkedlist *cur, struct linkedlist *addon)
 {
         while(cur->next != NULL){
@@ -202,6 +219,15 @@ void collision(struct linkedlist *cur, struct linkedlist *addon)
 }
 
 
+/**
+ * @brief deletes a given key from the function key is gotten from the
+ * radix of the user input.
+ * @remark If multiple inputs have the same key seems like its gonna delete 
+ * them all
+ * 
+ * @param has the hash table
+ * @param key they key we are deleting
+ */
 void delete(struct hashtab *has, long int key)
 {
         struct linkedlist *bucket, *prev;
