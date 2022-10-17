@@ -180,3 +180,41 @@ void printbucket(struct linkedlist *bucket)
                 printbucket(bucket->next);
         }
 }
+
+
+void insert(struct hashtab *has, struct linkedlist *bucket)
+{
+        long long key = bucket->key % 31;
+        if (has[key].bucket == NULL)
+                has[key].bucket = bucket;
+        else{
+                collision(has[key].bucket, bucket);
+        }
+}
+
+
+void collision(struct linkedlist *cur, struct linkedlist *addon)
+{
+        while(cur->next != NULL){
+                cur = cur->next;
+        }
+        cur->next = addon;
+}
+
+
+void delete(struct hashtab *has, long long key)
+{
+        struct linkedlist *bucket, *prev;
+        bucket = has[key % 31];
+        while(bucket != NULL && bucket->key != key){
+                prev = bucket;
+                bucket = bucket->next;
+        }
+        if(prev != NULL){
+                prev->next = bucket->next;
+                free(bucket);
+        } else {
+                has[key % 31].bucket = NULL;
+                free(bucket);
+        }
+}
