@@ -26,7 +26,7 @@
 //linked list which will represent the elements in the bucket.
 struct linkedlist
 {
-        long long key;
+        long int key;
         char *word;
         struct linkedlist *next;
 };
@@ -39,8 +39,8 @@ struct hashtab
 };
 
 void createtable(int len, struct linkedlist *hash);
-long long radix(char *mess);
-long long pow(long long base, int power);
+long int radix(char *mess);
+long int pow(long int base, int power);
 struct linkedlist *init_bucket(char *mess);
 
 
@@ -94,9 +94,9 @@ struct linkedlist *init_bucket(char *mess)
  * @param mess the messsage we are adding.
  * 
  */
-long long radix(char *mess)
+long int radix(char *mess)
 {
-        long long key;
+        long int key;
         for(int i = 0; i < 4; i++){
                 if(mess[i] == '\0'){
                         break;
@@ -114,7 +114,7 @@ long long radix(char *mess)
  * @param power the degree of said power
  * @return the new base.
  */
-long long pow(long long base, int power)
+long int pow(long int base, int power)
 {
         if(power == 0){
                 base = 1;
@@ -184,7 +184,7 @@ void printbucket(struct linkedlist *bucket)
 
 void insert(struct hashtab *has, struct linkedlist *bucket)
 {
-        long long key = bucket->key % 31;
+        long int key = bucket->key % 31;
         if (has[key].bucket == NULL)
                 has[key].bucket = bucket;
         else{
@@ -202,10 +202,11 @@ void collision(struct linkedlist *cur, struct linkedlist *addon)
 }
 
 
-void delete(struct hashtab *has, long long key)
+void delete(struct hashtab *has, long int key)
 {
         struct linkedlist *bucket, *prev;
-        bucket = has[key % 31];
+        prev = NULL;
+        bucket = has[key % 31].bucket;
         while(bucket != NULL && bucket->key != key){
                 prev = bucket;
                 bucket = bucket->next;
