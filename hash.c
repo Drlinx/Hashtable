@@ -245,3 +245,34 @@ void delete(struct hashtab *has, long int key)
                 free(bucket);
         }
 }
+
+
+/**
+ * @brief gets a files pathway.
+ * @remark this is a helper function for mass inserts.
+ * 
+ * @param path the path of the file
+ * @return the file location.
+ */
+FILE *grabfile(char *path)
+{
+        FILE *fp = fopen(path, "r");
+        if(fp == NULL){
+                printf("Wrong file path\n");
+                printf("please use ./[file pathway]\n");
+                fp = grabfile(path);
+        }
+        return fp;
+}
+
+
+
+void mass_insert(char *path, struct hashtab *has)
+{
+        FILE *fp = grabfile(path);
+        char message[1024];
+        int key;
+        while(fscanf(fp, "%s", &message) == 1){
+                insert(has, init_bucket(message));
+        }
+}
