@@ -254,25 +254,33 @@ void delete(struct hashtab *has, long int key)
  * @param path the path of the file
  * @return the file location.
  */
-FILE *grabfile(char *path)
+FILE *grabfile(void)
 {
+        char path[128];
+        printf("Please enter a file pathway");
+        fgets(path, 128, stdin);
         FILE *fp = fopen(path, "r");
         if(fp == NULL){
                 printf("Wrong file path\n");
                 printf("please use ./[file pathway]\n");
-                fp = grabfile(path);
+                fp = grabfile();
         }
         return fp;
 }
 
 
-
-void mass_insert(char *path, struct hashtab *has)
+/**
+ * @brief does a mass insertion of a file.
+ * 
+ * @param has is the hash table we are inserting to.
+ * 
+ */
+void mass_insert(struct hashtab *has)
 {
-        FILE *fp = grabfile(path);
+        FILE *fp = grabfile();
         char message[1024];
         int key;
-        while(fscanf(fp, "%s", &message) == 1){
+        while(fscanf(fp, "%s\n", &message) == 1){
                 insert(has, init_bucket(message));
         }
 }
