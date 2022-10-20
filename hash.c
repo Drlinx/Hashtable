@@ -279,7 +279,6 @@ void mass_insert(struct hashtab *has)
 {
         FILE *fp = grabfile();
         char message[1024];
-        int key;
         while(fscanf(fp, "%s\n", &message) == 1){
                 insert(has, init_bucket(message));
         }
