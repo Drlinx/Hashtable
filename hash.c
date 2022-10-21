@@ -1,26 +1,25 @@
 /**
- * @file queuesandstacks.c
+ * @file hash.c
  * 
  * @author Kassidy Maberry
  * 
- * @date 2022/08/28
+ * @date 2022/10/23
  * 
- * Assignment: Queues and Stacks
+ * Assignment: hash table
  * 
- * @brief A program that works with either a queue or stack data structure.
+ * @brief Working hash table.
  * 
- * @detail A program that works with either a queue or stack. Does various 
- * operations for each. Adding an element, removing an element, or checking
- * if it is an empty. The 3 major operations all work within queue and stack
- * limitations.
+ * @detail A program that show cases a hash table with a few basic
+ * functions such as insert delete and a file import function.
  * 
  * @bugs none
  * 
- * @todo none
+ * @todo Menus, debugging, y see what else is left.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 //linked list which will represent the elements in the bucket.
@@ -257,7 +256,8 @@ void delete(struct hashtab *has, long int key)
 FILE *grabfile(void)
 {
         char path[128];
-        printf("Please enter a file pathway");
+        printf("Please enter a file pathway. WARNGING IF THE PATHWAY DOES NOT");
+        printf(" EXIST THE PROGRAM WILL CRASH.\n");
         fgets(path, 128, stdin);
         FILE *fp = fopen(path, "r");
         if(fp == NULL){
@@ -278,8 +278,11 @@ FILE *grabfile(void)
 void mass_insert(struct hashtab *has)
 {
         FILE *fp = grabfile();
-        char message[1024];
-        while(fscanf(fp, "%s\n", &message) == 1){
+        char message[128];
+        while(1 == 1){
+                fgets(message, 128, fp);
                 insert(has, init_bucket(message));
+                if(message[strlen(message) - 1] != '\n')
+                        break;
         }
 }
