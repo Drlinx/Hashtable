@@ -39,8 +39,20 @@ struct hashtab
 
 void createtable(int len, struct linkedlist *hash);
 long int radix(char *mess);
-long int pow(long int base, int power);
+long int power(long int base, int pow);
 struct linkedlist *init_bucket(char *mess);
+void inithas(struct hashtab *has, int len);
+struct linkedlist *init_bucket(char *mess);
+void nl_remove(char *mess);
+char *get_input(void);
+void printhash(struct hashtab *hash, int len);
+void printbucket(struct linkedlist *bucket);
+void insert(struct hashtab *has, struct linkedlist *bucket);
+void collision(struct linkedlist *cur, struct linkedlist *addon);
+void delete(struct hashtab *has, long int key);
+FILE *grabfile(void);
+void mass_insert(struct hashtab *has);
+
 
 
 int main()
@@ -100,7 +112,7 @@ long int radix(char *mess)
                 if(mess[i] == '\0'){
                         break;
                 }
-                key = key + (mess[i] * pow(128, i));
+                key = key + (mess[i] * power(128, i));
         }
         return key;
 }
@@ -113,12 +125,12 @@ long int radix(char *mess)
  * @param power the degree of said power
  * @return the new base.
  */
-long int pow(long int base, int power)
+long int power(long int base, int pow)
 {
-        if(power == 0){
+        if(pow == 0){
                 base = 1;
         } else{
-                for (int i = 0; i < power; i++)
+                for (int i = 0; i < pow; i++)
                         base *= base;
         }
 
