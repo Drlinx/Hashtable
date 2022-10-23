@@ -52,6 +52,7 @@ void collision(struct linkedlist *cur, struct linkedlist *addon);
 void delete(struct hashtab *has, long int key);
 FILE *grabfile(void);
 void mass_insert(struct hashtab *has);
+void help(void);
 
 
 
@@ -59,10 +60,61 @@ int main()
 {
         //Hashtab works as an array of linked lists which represent buckets.
         struct hashtab hash[31];
+        char input[128];
         inithas(hash, 31);
-
+        printf("h) for help\n");
+        while(1){
+                printf("Enter an input: ");
+                fgets(input, 128, stdin);
+                switch (input[0])
+                {
+                case 'h':
+                case 'H':
+                        help();
+                        break;
+                case 'i':
+                case 'I':
+                        mass_insert(hash);
+                        break;
+                case 'a':
+                case 'A': 
+                        insert(hash, init_bucket(get_input()));
+                        break;
+                case 'd':
+                case 'D':
+                        delete(hash, radix(get_input()));
+                        break;
+                case 'p':
+                case 'P':
+                        printhash(hash, 31);
+                        break;
+                case 'e':
+                case 'E':
+                        goto exit;
+                case 't':
+                case 'T':
+                        printf("%s", get_input());
+                default:
+                        break;
+                }
+        }
+        exit:
 
         return 0;
+}
+
+
+/**
+ * @brief a helper function for user navigation.
+ */
+void help(void)
+{
+        printf("h) help\n");
+        printf("i) to import a file\n");
+        printf("a) to insert a single element\n");
+        printf("d) delete an element\n");
+        printf("p) print the hash table\n");
+        printf("e) exit\n");
 }
 
 
@@ -145,7 +197,7 @@ long int power(long int base, int pow)
  */
 void nl_remove(char *mess)
 {
-        for(int i = 0; mess[i] !=' \0'; i++){
+        for(int i = 0; mess[i] != '\0'; i++){
                 if (mess[i] == '\n'){
                         mess[i] = '\0';
                         break;
@@ -161,8 +213,8 @@ void nl_remove(char *mess)
  */
 char *get_input(void)
 {
-        char z[128];
-        printf("What message are we storing: ");
+        char *z = malloc(sizeof(char) * 128);
+        printf("enter the message: ");
         fgets(z, 128, stdin);
         nl_remove(z);
         return z;
@@ -180,6 +232,7 @@ void printhash(struct hashtab *hash, int len)
         for(int i = 0; i < len; i++){   
                 printf("Bucket %d: ", i + 1);
                 printbucket(hash[i].bucket);
+                printf("\n");
         }
 }
 
@@ -192,9 +245,10 @@ void printhash(struct hashtab *hash, int len)
 void printbucket(struct linkedlist *bucket)
 {
         if(bucket != NULL){
-                printf("%s ", bucket->word);
+                printf("%s, ", bucket->word);
                 printbucket(bucket->next);
         }
+
 }
 
 
@@ -206,7 +260,8 @@ void printbucket(struct linkedlist *bucket)
 */
 void insert(struct hashtab *has, struct linkedlist *bucket)
 {
-        long int key = bucket->key % 31;
+        int key = bucket->key % 31;
+        printf("%d", key);
         if (has[key].bucket == NULL)
                 has[key].bucket = bucket;
         else{
@@ -242,18 +297,24 @@ void collision(struct linkedlist *cur, struct linkedlist *addon)
 void delete(struct hashtab *has, long int key)
 {
         struct linkedlist *bucket, *prev;
+        int loc = key % 31;
+        printf("%d", loc);
         prev = NULL;
-        bucket = has[key % 31].bucket;
-        while(bucket != NULL && bucket->key != key){
-                prev = bucket;
-                bucket = bucket->next;
-        }
-        if(prev != NULL){
-                prev->next = bucket->next;
-                free(bucket);
+        bucket = has[loc].bucket;
+        if (bucket == NULL){
+                printf("Bucket set is empty\n");
+        } else if (bucket == has[loc].bucket){
+                has[loc].bucket = bucket->next;
         } else {
-                has[key % 31].bucket = NULL;
-                free(bucket);
+                while (bucket != NULL){
+                        if (bucket->key == key){
+                                prev->next = bucket->next;
+                                free(bucket);
+                                break;
+                        }
+                        prev = bucket;
+                        bucket = bucket->next;
+                }
         }
 }
 
@@ -270,7 +331,9 @@ FILE *grabfile(void)
         char path[128];
         printf("Please enter a file pathway. WARNGING IF THE PATHWAY DOES NOT");
         printf(" EXIST THE PROGRAM WILL CRASH.\n");
+        printf("Enter an input: ");
         fgets(path, 128, stdin);
+        nl_remove(path);
         FILE *fp = fopen(path, "r");
         if(fp == NULL){
                 printf("Wrong file path\n");
@@ -290,11 +353,18 @@ FILE *grabfile(void)
 void mass_insert(struct hashtab *has)
 {
         FILE *fp = grabfile();
-        char message[128];
-        while(1 == 1){
+        char *message = malloc (128);
+        int i = 1;
+        while(i == 1){
+                message = malloc(128);
                 fgets(message, 128, fp);
-                insert(has, init_bucket(message));
+                printf("%s\n", message);
                 if(message[strlen(message) - 1] != '\n')
-                        break;
+                        i = 0;
+                else if (message[0] == '\0'){
+                        i = 0;
+                }
+                nl_remove(message);
+                insert(has, init_bucket(message));
         }
 }
