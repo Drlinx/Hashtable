@@ -14,7 +14,7 @@
  * 
  * @bugs none
  * 
- * @todo Menus, debugging, y see what else is left.
+ * @todo Seems to be a problem with key values. Kinda odd.
  */
 
 #include <stdio.h>
@@ -159,7 +159,7 @@ struct linkedlist *init_bucket(char *mess)
  */
 long int radix(char *mess)
 {
-        long int key;
+        long int key = 0;
         for(int i = 0; i < 4; i++){
                 if(mess[i] == '\0'){
                         break;
@@ -346,6 +346,8 @@ FILE *grabfile(void)
 
 /**
  * @brief does a mass insertion of a file.
+ * @remark do be warned it will create an infinite file loop if the last line
+ * is empty.
  * 
  * @param has is the hash table we are inserting to.
  * 
