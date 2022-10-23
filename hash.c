@@ -303,7 +303,7 @@ void delete(struct hashtab *has, long int key)
         bucket = has[loc].bucket;
         if (bucket == NULL){
                 printf("Bucket set is empty\n");
-        } else if (bucket == has[loc].bucket){
+        } else if (bucket == has[loc].bucket && key == bucket->key){
                 has[loc].bucket = bucket->next;
         } else {
                 while (bucket != NULL){
