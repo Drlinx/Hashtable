@@ -261,7 +261,6 @@ void printbucket(struct linkedlist *bucket)
 void insert(struct hashtab *has, struct linkedlist *bucket)
 {
         int key = bucket->key % 31;
-        printf("%d", key);
         if (has[key].bucket == NULL)
                 has[key].bucket = bucket;
         else{
@@ -298,7 +297,6 @@ void delete(struct hashtab *has, long int key)
 {
         struct linkedlist *bucket, *prev;
         int loc = key % 31;
-        printf("%d", loc);
         prev = NULL;
         bucket = has[loc].bucket;
         if (bucket == NULL){
