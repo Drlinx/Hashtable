@@ -329,8 +329,7 @@ void delete(struct hashtab *has, long int key)
 FILE *grabfile(void)
 {
         char path[128];
-        printf("Please enter a file pathway. WARNGING IF THE PATHWAY DOES NOT");
-        printf(" EXIST THE PROGRAM WILL CRASH.\n");
+        printf("Please enter a file pathway. WARNGING WRONG INPUTS CAN CRASHES\n");
         printf("Enter an input: ");
         fgets(path, 128, stdin);
         nl_remove(path);
