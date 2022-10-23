@@ -1,16 +1,14 @@
-    Currently all the implementations are fairly straightforward. I know these can
-be hard to read so if you skim over this at least read this: INPUTING THE WRONG
-PATHWAY WILL CRASH THE PROGRAM. 
+Kassidy Maberry
+Class: cse122
+2022/10/23
+Assignment: Hash tables
 
-    I did have problems converting information from text files as I haven't used
-an entire line before rather used white spaces as sperators or character by.
-character. As such I had to do a few expiremental attempts with it. Originally
-I had a prototype which read the entire file and then after that we would use
-the newlines it copied out into seperate items and insert it. However, this 
-was very memory intensive and creates problems once we hit a certain character
-amount. 
+    This Assignment is a working program of a hash table. It allows you to
+Add or remove elements at will as well as import an entire files contents.
 
-    With the new implementation I have it read line by line with a max of 127 chars
-As most code is meant to be within 80 lines for readability. It'd make sense
-we'd stay in the same bounds for text files. TLDR: DO NOT HAVE A LINE LONGER THAN
-127 CHARACTERS. it'll cause problems with the reading.
+    I didn't have as many difficulties coding this as I thought I would for
+example during the entire process of this there are no bugs that can cause 
+the program to crash. The bugs currently are all logic errors. The largest bug 
+I had was during the radix the original key value was not assigned to zero
+however because we were using the unassigned value we added that to the key 
+which produced what felt like randomly generated key values.
