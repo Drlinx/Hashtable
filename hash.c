@@ -62,7 +62,7 @@ int main()
         struct hashtab hash[31];
         char input[128];
         inithas(hash, 31);
-        printf("h) for help\n");
+        help();
         while(1){
                 printf("Enter an input: ");
                 fgets(input, 128, stdin);
