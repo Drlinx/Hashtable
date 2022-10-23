@@ -346,7 +346,7 @@ FILE *grabfile(void)
 /**
  * @brief does a mass insertion of a file.
  * @remark do be warned it will create an infinite file loop if the last line
- * is empty.
+ * is empty. 
  * 
  * @param has is the hash table we are inserting to.
  * 
